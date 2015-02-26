@@ -12,5 +12,11 @@ describe UrlsController, :type => :controller do
       get :popular
       expect(response).to render_template :popular
     end
+
+    it "creates a url when passed valid data" do
+      post :create, url: attributes_for(:url)
+      byebug
+      expect(response).to eq("object") 
+    end
   end
 end

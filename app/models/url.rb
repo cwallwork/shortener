@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Url < ActiveRecord::Base
   belongs_to :user
 
@@ -10,11 +12,16 @@ class Url < ActiveRecord::Base
   scope :popular, -> {order("\"view_count\" desc").limit(100)}
 
   def self.find_or_save(url)
-    if find_current(url[:full_url])
-      return find_current(url[:full_url])
+
+    if find_current(url.full_url)
+      return find_current(url.full_url)
     else
       url.save
     end
+  end
+
+  def self.find_current(full_url)
+    Url.where(full_url: full_url).first
   end
 
   def convert_url
@@ -23,7 +30,5 @@ class Url < ActiveRecord::Base
 
   private
 
-  def find_current(full_url)
-    Url.find(full_url: full_url).first
-  end
+  
 end
