@@ -17,6 +17,7 @@ class Url < ActiveRecord::Base
       return find_current(url.full_url)
     else
       url.save
+      url
     end
   end
 
