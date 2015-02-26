@@ -7,7 +7,7 @@ class Url < ActiveRecord::Base
   validates :full_url, uniqueness: true
   after_save :convert_url
 
-  attr_accessible :full_url, :view_count
+  attr_accessible :full_url, :view_count, :converted_url
 
   scope :popular, -> {order("\"view_count\" desc").limit(100)}
 
@@ -26,7 +26,9 @@ class Url < ActiveRecord::Base
   end
 
   def convert_url
-    self.converted_url = self.id.to_i.to_s(36)
+    if !self.converted_url
+      self.update_attributes(converted_url: self.id.to_i.to_s(36))
+    end
   end
 
   private
