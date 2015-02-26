@@ -1,6 +1,8 @@
 <h1>Welcome to Shortener</h1>
 
-<%= form_for @url, url: new_url_path do |f|%>
-	<%= f.text_field :url %>
-	<%= f.submit %>
-<%end%>
+<div id="new_url_box">
+	<form id="new_url_form"></form>
+		<input type="text" name="url">
+		<input type="submit" value="Shorten!">
+	</form>
+</div>
