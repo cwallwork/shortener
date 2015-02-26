@@ -9,6 +9,13 @@ require 'rspec/autorun'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+    Rails.application.load_seed # loading seeds
+  end
+  
   config.include FactoryGirl::Syntax::Methods
   # ## Mock Framework
   #

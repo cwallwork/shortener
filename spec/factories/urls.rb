@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :url do 
-    full_url "http://google.com"
+    full_url "http://notalreadindatabase.com"
     
   
 

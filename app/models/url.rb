@@ -2,9 +2,28 @@ class Url < ActiveRecord::Base
   belongs_to :user
 
   validates :full_url, uri: true 
-  before_create :convert_url
+  validates :full_url, uniqueness: true
+  after_save :convert_url
+
+  attr_accessible :full_url, :view_count
+
+  scope :popular, -> {order("\"view_count\" desc").limit(100)}
+
+  def self.find_or_save(url)
+    if find_current(url[:full_url])
+      return find_current(url[:full_url])
+    else
+      url.save
+    end
+  end
 
   def convert_url
-    converted_url = self.id.to_i.to_s(36)
+    self.converted_url = self.id.to_i.to_s(36)
+  end
+
+  private
+
+  def find_current(full_url)
+    Url.find(full_url: full_url).first
   end
 end

@@ -1,0 +1,6 @@
+<h1>Welcome to Shortener</h1>
+
+<%= form_for @url, url: new_url_path do |f|%>
+	<%= f.text_field :url %>
+	<%= f.submit %>
+<%end%>

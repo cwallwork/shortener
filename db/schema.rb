@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20150224163758) do
   create_table "urls", :force => true do |t|
     t.string   "full_url"
     t.string   "converted_url"
+    t.integer  "view_count"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

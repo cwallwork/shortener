@@ -3,6 +3,7 @@ class CreateUrls < ActiveRecord::Migration
     create_table :urls do |t|
       t.string :full_url
       t.string :converted_url
+      t.integer :view_count
       t.timestamps
     end
   end
