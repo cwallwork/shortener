@@ -13,8 +13,8 @@ class UrlsController < ApplicationController
     if create_url
       assign_url
     end
-
-    if @url.errors
+  
+    unless @url.errors.empty?
       render :json => @url.errors.messages[:full_url]
     else
       render :json => @url

@@ -15,6 +15,10 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+"use strict"
+
+var hostName = window.location.host
+
 $(document).ready(function(){
 	urlFormEventListener();
 
@@ -23,23 +27,31 @@ $(document).ready(function(){
 })
 
 function urlFormEventListener(){
-	$("#new_form_url").on("click".function(event){
+	$("#new_url_form").submit(function(event){
 		event.preventDefault();
-		var formData = $(this).searialize);
-		$ajax.ajax({
-			url: "url/create",
-			data = formData
-
-		}).done(shortUrlReplace(response))
-		.fail(showErrorMessage(response))
-	})
+		var enteredUrl = $(this).serializeArray()[0].value;
+		console.log(enteredUrl);
+		$.ajax({
+			type: "POST",
+			url: "urls",
+			data: {url:{full_url: enteredUrl}},
+		}).done(function(response){responseHandler(response)});
+		
+	});
 }
 
-function shortUrlReplace(response){
-	console.log(response);
+function responseHandler(response){
+	if(response.full_url){
+		var shortUrl = hostName + "/" + response.converted_url
+		$("#new_url_box").html("<p id='short_url'>Your short URL is: <a href=" + shortUrl +">" + shortUrl + "</a></p>");
+	}
+	else {
+		showErrorMessage(response);
+	}
 }
 
-function showErrorMessage(response)
-	console.log(response);
+function showErrorMessage(response){
+	$("#new_url_form").find("input[name=url]").val("");
+	$("#new_url_box").prepend(response);
 }
 
