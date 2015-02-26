@@ -14,8 +14,11 @@ class UrlsController < ApplicationController
       assign_url
     end
 
-
-    url.errors.messages[:full_url]
+    if @url.errors
+      render :json => @url.errors.messages[:full_url]
+    else
+      render :json => @url
+    end
   end
 
   private
@@ -26,7 +29,6 @@ class UrlsController < ApplicationController
   end
 
   def url_params
-    byebug
     params.require(:url).permit(:full_url)
   end
 
@@ -36,7 +38,7 @@ class UrlsController < ApplicationController
 
   def create_url
     build_url
-    @url = url_scope.find_or_save()
+    @url = url_scope.find_or_save(@url)
   end
 
   def assign_url
