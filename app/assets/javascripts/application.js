@@ -12,4 +12,34 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function(){
+	urlFormEventListener();
+
+
+
+})
+
+function urlFormEventListener(){
+	$("#new_form_url").on("click".function(event){
+		event.preventDefault();
+		var formData = $(this).searialize);
+		$ajax.ajax({
+			url: "url/create",
+			data = formData
+
+		}).done(shortUrlReplace(response))
+		.fail(showErrorMessage(response))
+	})
+}
+
+function shortUrlReplace(response){
+	console.log(response);
+}
+
+function showErrorMessage(response)
+	console.log(response);
+}
+

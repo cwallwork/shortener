@@ -19,4 +19,18 @@ describe Url do
     popular = Url.popular
     expect(popular.length).to eq(100)
   end
+
+  it "returns a url from the database (if present) instead of creating a new one" do
+    url = build(:url)
+    Url.find_or_save(url)
+    url2 = build(:url, full_url: url.full_url)
+    url2 = Url.find_or_save(url2)
+    expect(url2).to eq(url)
+  end
+
+  it "returns an error if we try to search and return an invalid url" do
+    url = build(:invalid_url)
+    Url.find_or_save(url)
+    expect(url.errors.messages[:full_url]).to include("The entered URL is invalid")
+  end
 end

@@ -1,3 +1,4 @@
+require 'byebug'
 class UrlsController < ApplicationController
 
   def popular
@@ -11,20 +12,21 @@ class UrlsController < ApplicationController
   def create
     if create_url
       assign_url
-      render @url
-    else
-     render new_path
     end
+
+
+    url.errors.messages[:full_url]
   end
 
   private
 
   def build_url
-    @url ||= url_scope.build
+    @url ||= url_scope.new
     @url.attributes = url_params
   end
 
   def url_params
+    byebug
     params.require(:url).permit(:full_url)
   end
 
@@ -44,7 +46,7 @@ class UrlsController < ApplicationController
   end
 
   def url_scope
-    Url.all
+    Url.scoped
   end
 
 end
